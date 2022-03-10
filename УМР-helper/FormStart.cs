@@ -56,9 +56,12 @@ namespace УМР_helper
                     dgvExcel[j + 3, i].Value.ToString(),
                     dgvExcel[j + 4, i].Value.ToString(),
                     dgvExcel[j + 5, i].Value.ToString());
-                oDoc.SaveAs(FileName: Environment.CurrentDirectory + "\\Itu-119.docx");
+                oDoc.SaveAs(FileName: Environment.CurrentDirectory + "\\Itu-119" + dgvExcel[j, i].Value.ToString() + ".docx");
                 oDoc.Close();
+                
             }
+            MessageBox.Show("Файл успешно сгенерирован!", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            
         }
         private _Document GetDoc(string path, string midname, string fname, string lname, string date, string number, string prikaz)
         {
@@ -66,8 +69,14 @@ namespace УМР_helper
             SetTemplate(oDoc, midname, fname, lname, date, number, prikaz);
             return oDoc;
         }
+        private _Document PlusDoc(string[] mas, string path)
+        {
+            _Document doc = oWord.Documents.Add(path);
+
+            return doc;
+        }
         // Замена закладок на данные из dgv
-        private void SetTemplate(Word._Document oDoc, string midname, string fname, string lname, string date, string number, string prikaz)
+        private void SetTemplate(Word._Document oDoc, string midname, string fname, string lname, string number, string prikaz, string date)
         {
             oDoc.Bookmarks["midname"].Range.Text = midname;
             oDoc.Bookmarks["fname"].Range.Text = fname;
