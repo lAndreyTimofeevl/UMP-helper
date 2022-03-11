@@ -35,6 +35,7 @@ namespace УМР_helper
             this.dgvExcel = new System.Windows.Forms.DataGridView();
             this.lblWord = new System.Windows.Forms.Label();
             this.btnWord = new System.Windows.Forms.Button();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.dgvExcel)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,6 +51,8 @@ namespace УМР_helper
             // 
             // lbDownloadFile
             // 
+            this.lbDownloadFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lbDownloadFile.AutoSize = true;
             this.lbDownloadFile.Location = new System.Drawing.Point(12, 16);
             this.lbDownloadFile.Name = "lbDownloadFile";
@@ -72,6 +75,8 @@ namespace УМР_helper
             // 
             // lblWord
             // 
+            this.lblWord.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblWord.AutoSize = true;
             this.lblWord.Location = new System.Drawing.Point(12, 50);
             this.lblWord.Name = "lblWord";
@@ -89,11 +94,22 @@ namespace УМР_helper
             this.btnWord.UseVisualStyleBackColor = true;
             this.btnWord.Click += new System.EventHandler(this.btnWord_Click);
             // 
+            // progressBar
+            // 
+            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar.Location = new System.Drawing.Point(12, 602);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(435, 23);
+            this.progressBar.TabIndex = 5;
+            // 
             // FormStart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1282, 637);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.btnWord);
             this.Controls.Add(this.lblWord);
             this.Controls.Add(this.dgvExcel);
@@ -116,6 +132,7 @@ namespace УМР_helper
         private System.Windows.Forms.DataGridView dgvExcel;
         private System.Windows.Forms.Label lblWord;
         private System.Windows.Forms.Button btnWord;
+        private System.Windows.Forms.ProgressBar progressBar;
     }
 }
 

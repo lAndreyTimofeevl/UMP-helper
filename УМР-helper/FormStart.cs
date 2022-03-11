@@ -20,6 +20,7 @@ namespace УМР_helper
     {
         Word._Application oWord = new Word.Application();
         Table table = new Table();
+        
         public FormStart()
         {
             InitializeComponent();
@@ -30,6 +31,8 @@ namespace УМР_helper
             table.openTable(dgvExcel);
             lblWord.Visible = true;
             btnWord.Visible = true;
+            progressBar.Maximum = dgvExcel.RowCount - 2;
+            progressBar.Minimum = 0;
         }
 
         private void btnWord_Click(object sender, EventArgs e)
@@ -42,41 +45,53 @@ namespace УМР_helper
         {
             lblWord.Visible = false;
             btnWord.Visible = false;
+            progressBar.Visible = false;
         }
         public void opendocument()
         {
-            _Document oDoc;
+            progressBar.Visible = true;
+            Document oDoc;
+            Document tmp;
+
             for (int i = 1; i < dgvExcel.RowCount-1; i++)
             {
+                tmp = oWord.Documents.Add(Environment.CurrentDirectory + "\\Итог\\Итог.docx");
                 int j = 2;
-                oDoc = GetDoc(Environment.CurrentDirectory + "\\Шаблон.docx",
+                oDoc = GetDoc(Environment.CurrentDirectory + "\\Шаблон\\Шаблон.docx",
                     dgvExcel[j, i].Value.ToString(),
                     dgvExcel[j + 1, i].Value.ToString(),
                     dgvExcel[j + 2, i].Value.ToString(),
                     dgvExcel[j + 3, i].Value.ToString(),
                     dgvExcel[j + 4, i].Value.ToString(),
                     dgvExcel[j + 5, i].Value.ToString());
-                oDoc.SaveAs(FileName: Environment.CurrentDirectory + "\\Itu-119" + dgvExcel[j, i].Value.ToString() + ".docx");
+                oDoc.SaveAs(FileName: Environment.CurrentDirectory + "\\temp.docx");
                 oDoc.Close();
-                
+                //oDoc.SaveAs(FileName: Environment.CurrentDirectory + "\\Itu-119 " + dgvExcel[j, i].Value.ToString() + ".docx");
+                //oWord.MergeDocuments(oDoc, tmp);
+                tmp.Merge(Environment.CurrentDirectory + "\\temp.docx", tmp);
+                //tmp.Merge(Environment.CurrentDirectory + "\\temp.docx", tmp);
+                //oDoc.SaveAs(FileName: Environment.CurrentDirectory + "\\temp.docx");
+                //tmp.SaveAs(FileName: Environment.CurrentDirectory + "\\Итог\\Итог.docx");
+                tmp.Close();
+                progressBar.Value ++;
+                if(progressBar.Value == progressBar.Maximum)
+                {
+                    MessageBox.Show("Файл успешно сгенерирован!", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    progressBar.Visible = false;
+                    progressBar.Value = 0;
+                }
             }
-            MessageBox.Show("Файл успешно сгенерирован!", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
             
+
         }
-        private _Document GetDoc(string path, string midname, string fname, string lname, string date, string number, string prikaz)
+        private Document GetDoc(string path, string midname, string fname, string lname, string date, string number, string prikaz)
         {
-            _Document oDoc = oWord.Documents.Add(path);
+            Document oDoc = oWord.Documents.Add(path);
             SetTemplate(oDoc, midname, fname, lname, date, number, prikaz);
             return oDoc;
         }
-        private _Document PlusDoc(string[] mas, string path)
-        {
-            _Document doc = oWord.Documents.Add(path);
-
-            return doc;
-        }
         // Замена закладок на данные из dgv
-        private void SetTemplate(Word._Document oDoc, string midname, string fname, string lname, string number, string prikaz, string date)
+        private void SetTemplate(Word.Document oDoc, string midname, string fname, string lname, string number, string prikaz, string date)
         {
             oDoc.Bookmarks["midname"].Range.Text = midname;
             oDoc.Bookmarks["fname"].Range.Text = fname;
@@ -86,5 +101,8 @@ namespace УМР_helper
             oDoc.Bookmarks["number_bilet"].Range.Text = number;
             oDoc.Bookmarks["numpri"].Range.Text = prikaz;
         }
+        
     }
+
 }
+
