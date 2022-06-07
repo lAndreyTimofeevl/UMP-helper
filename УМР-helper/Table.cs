@@ -63,6 +63,8 @@ namespace УМР_helper
                 app.Quit();
             }
             app.Quit();
+            oWord.Quit();
+
 
         }
         
